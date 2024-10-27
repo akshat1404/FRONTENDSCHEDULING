@@ -1,0 +1,31 @@
+.auth-container {
+    position: relative; /* Position context for the overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('./wppr.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    opacity: 0.8;
+  }
+  
+  .auth-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
+  }
+  
+  .auth-container h1,
+  .auth-container p {
+    position: relative; 
+    z-index: 2;
+  }
+  

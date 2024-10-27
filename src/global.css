@@ -1,0 +1,11 @@
+body{
+    margin: 0;
+    height: auto;
+}
+
+.input-label {
+    font-size: 15px;
+    color: #333;
+    margin-right: 10px;
+    white-space: nowrap;
+}
