@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'; // Import the CSS file for styles
 
-const Modal = ({ isOpen, onClose, title, children, onSubmit, ButtonTitle, DeleteButtonTitle, onDelete }) => {
+const Modal = ({ isOpen, onClose, title, children, onSubmit, ButtonTitle, DeleteButtonTitle, onDelete, moreActions }) => {
         
     const handleEnter = (event) => {
         if (event.key === 'Enter') {
@@ -36,9 +36,17 @@ const Modal = ({ isOpen, onClose, title, children, onSubmit, ButtonTitle, Delete
                     {onDelete && <button className="footer-button-delete" onClick={onDelete}>
                         {DeleteButtonTitle? DeleteButtonTitle :"Delete"}
                     </button>}
+                    <div style={{display:'flex', gap:'10px'}} >
+                    {
+                        moreActions?.length ? 
+                        moreActions.map((action, index) => {
+                            return <button key={index} className="footer-button" onClick={action.onClick}>{action.title}</button>
+                        }) : null
+                    }
                     <button className="footer-button" onClick={onSubmit}>
                         {ButtonTitle? ButtonTitle :"Submit"}
                     </button>
+                    </div>
                 </footer>
             </div>
         </div>,

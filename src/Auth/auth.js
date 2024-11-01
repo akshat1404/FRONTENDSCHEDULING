@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import Input from '../Utils/Input';
 import './auth.css'; 
 import {post} from '../Axios/Axios';
+import store from 'store';
 
 function Auth() {
 
@@ -36,22 +37,20 @@ function Auth() {
                     <button
                         style={{marginTop:'20px'}}
                         onClick={() => {
-                            console.log(EMAIL.current.getValue(), PASSWORD.current.getValue());
                             let email=EMAIL.current.getValue();
                             let password=PASSWORD.current.getValue();
-                            
-                            const response = post('auth/login',{
+                            post('auth/login',{
                                 email,
                                 password
                             },(response) => {
-                                console.log(response);
+                                if(response?.token){
+                                    console.log('first')
+                                    const expiresAt = Date.now() + 600000;
+                                    store.set('token', {token : response.token, expiresAt});
+                                    alert("Successfully Logged In");
+                                    window.location.reload("/");
+                                }
                             })
-
-                            if(response){
-                                alert("Successfully Logged In");
-                                localStorage.setItem('token', response.token);
-                                window.location.reload("/");
-                            }
                         }}
                     >
                         Login
@@ -62,9 +61,9 @@ function Auth() {
                 
                 <>
                     <h2 style={{color:'black', margin:'20px 0'}} >Create Account</h2>
-                    <Input style={{justifyContent:'end'}} labelStyle={{fontSize:'16px'}} ref={NAME} label="Name" />
                     <Input style={{justifyContent:'end'}} labelStyle={{fontSize:'16px'}} ref={EMAIL} label="Email" />
                     <Input style={{justifyContent:'end'}} labelStyle={{fontSize:'16px'}} ref={PASSWORD} label="Password" />
+                    <Input style={{justifyContent:'end'}} labelStyle={{fontSize:'16px'}} ref={NAME} label="Name" />
                     <button
                         style={{marginTop:'20px'}}
                         onClick={() => {
@@ -74,16 +73,15 @@ function Auth() {
                             
                             if(!name || !email || !password || !validateEmail(email)) return ;
 
-                            const response = post('auth/signup',{
+                            post('auth/signup',{
                                 name:name,
                                 email:email,
                                 password:password
-                            })
-                            console.log(response);
-                            if(response){
+                            },(res)=>{
                                 setSign(false);
                                 alert("Successfully Signed In");
-                            }
+                                console.log(res);
+                            })
                         }}
                     >
                         Sign Up

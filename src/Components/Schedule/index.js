@@ -16,7 +16,7 @@ export default function Schedule() {
 
         const data = stepData.current.getValue();
         Object.entries(data).map(([key, value]) => {
-            setPayload((prev)=>({...prev, [key]: value}))
+            return setPayload((prev)=>({...prev, [key]: value}))
         })
         setStep(step + 1);
     };
@@ -26,7 +26,7 @@ export default function Schedule() {
         const ScheduleId ='Schedule'+generateNumericId();
         payload.id=ScheduleId;
         post('api/schedules', payload, (res) => {
-            if(res){
+            if(!res.error){
                 alert("Schedule Created Successfully");
                 navigate('/schedule');
             }

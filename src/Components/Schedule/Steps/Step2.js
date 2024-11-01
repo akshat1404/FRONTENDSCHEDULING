@@ -124,6 +124,18 @@ function Step2({moveNext, setStep},ref) {
             editTask();
             setEdit(false)
           }}
+          moreActions={[
+            {
+              title:'Copy Task',
+              onClick:()=>{
+                navigator.clipboard.writeText(JSON.stringify({
+                  startTime: new Date(edit.start),
+                  endTime: new Date(edit.end),
+                  name: edit.title
+                }));
+              }
+            }
+          ]}
           title="Edit Task"
           ButtonTitle="Edit Task"
           DeleteButtonTitle="Delete Task"
@@ -164,6 +176,16 @@ function Step2({moveNext, setStep},ref) {
           onSubmit={addTask}
           title="Add Task"
           ButtonTitle="Add Task"
+          moreActions={[
+            {
+              title:'Paste Task',
+              onClick:async ()=>{
+                const pastedTask=await navigator.clipboard.readText();
+                console.log(moment(pastedTask.startTime), moment(pastedTask.endTime));
+                setNewTask(pastedTask)
+              }
+            }
+          ]}
           >
           <Input
             label="Task Name"

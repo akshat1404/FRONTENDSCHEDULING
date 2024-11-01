@@ -21,7 +21,7 @@ export default function Index() {
                 return
             }
 
-            res?.map((item) => {
+            res.length >0 && res?.map((item) => {
                 return newItems.push({
                     name: item.name,
                     path: `/schedule/${item.id}`,
