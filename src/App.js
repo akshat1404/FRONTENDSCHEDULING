@@ -27,7 +27,7 @@ function App() {
             active: pathname.includes('todo')
         }
     ];
-  
+    console.log('helllllllo')
     return (
         <>
         {

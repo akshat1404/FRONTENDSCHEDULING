@@ -44,8 +44,7 @@ function Auth() {
                                 password
                             },(response) => {
                                 if(response?.token){
-                                    console.log('first')
-                                    const expiresAt = Date.now() + 600000;
+                                    const expiresAt = Date.now() + 3600 * 1000;
                                     store.set('token', {token : response.token, expiresAt});
                                     alert("Successfully Logged In");
                                     window.location.reload("/");

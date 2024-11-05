@@ -88,7 +88,6 @@ function ViewSchedule({moveNext},ref) {
 
   const editTask = () => {
     const { startTime, endTime } = newTask;
-    console.log(startTime, endTime);
     let name = TASKNAME.current.getValue();
     if (!name || moment(endTime).isSameOrBefore(startTime)) return;
     const newTaskEntry = { start: startTime, end: endTime, title: name, id: edit.id };
@@ -100,7 +99,13 @@ function ViewSchedule({moveNext},ref) {
   if(tasks.length===0) return <></>
 
   return (
-    <div>
+    <div style={{padding:'20px'}} >
+    <button
+      onClick={()=>{
+        
+      }}
+    >
+    Follow This Schedule</button>
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <div className="weekly-planner">
         <Calendar

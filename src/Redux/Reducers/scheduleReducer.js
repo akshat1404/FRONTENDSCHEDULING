@@ -1,9 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  scheduleId: '',
-  scheduleName: '',
-  scheduleType: '',
+  id:undefined
 };
 
 const followedScheduleSlice = createSlice({
@@ -11,14 +9,10 @@ const followedScheduleSlice = createSlice({
   initialState,
   reducers: {
     setFollowedSchedule: (state, action) => {
-      state.scheduleId = action.payload.scheduleId;
-      state.scheduleName = action.payload.scheduleName;
-      state.scheduleType = action.payload.scheduleType;
+      state.id = action.payload.id;
     },
     clearFollowedSchedule: (state) => {
-      state.scheduleId = '';
-      state.scheduleName = '';
-      state.scheduleType = '';
+      state.id = undefined;
     },
   },
 });

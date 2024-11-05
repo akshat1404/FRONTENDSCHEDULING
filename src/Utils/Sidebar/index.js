@@ -4,7 +4,6 @@ import './index.css';
 
 function Sidebar(props) {
   const navigate = useNavigate();
-  // console.log(props)
   return (
     <div className='sidebar' style={props?.style} >
       {props.items?.map((item) => {

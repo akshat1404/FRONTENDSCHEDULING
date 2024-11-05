@@ -23,6 +23,10 @@ export default function Schedule() {
     
     const sendData = async () => {  
 
+        if(payload?.tasks?.length===0){
+            alert("Please add atleast one task");
+            return;
+        }
         const ScheduleId ='Schedule'+generateNumericId();
         payload.id=ScheduleId;
         post('api/schedules', payload, (res) => {
