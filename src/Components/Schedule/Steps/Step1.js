@@ -2,11 +2,12 @@ import React, { useImperativeHandle, useRef, useState } from 'react'
 import Input from '../../../Utils/Input'
 import Modal from '../../../Utils/Modal'
 import Dropdown from '../../../Utils/Dropdown'
-import DatePicker from '../../../Utils/DatePicker'
+import { useNavigate } from 'react-router-dom'
 
 function Step1({setStep,moveNext},ref) {
 
     const [isOpen, setIsOpen] = useState(true);
+    const navigate=useNavigate();
 
     const ScheduleRef = useRef();
     const Type = useRef();
@@ -45,8 +46,8 @@ function Step1({setStep,moveNext},ref) {
             moveNext()
         }}
         onClose={() => {
-            setStep(0);
             setIsOpen(false)
+            navigate('/schedule');
         }}
     >
         <Input ref={ScheduleRef} label="Schedule Name" />

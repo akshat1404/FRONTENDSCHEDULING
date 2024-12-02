@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import {Routes, Route, useLocation} from 'react-router-dom';
 import Sidebar from '../../Utils/Sidebar';
 import Schedule from './index';
-import ViewSchedule from './ViewSchedule';
+import ViewSchedule from './ViewSchedule/ViewSchedule';
 
 export default function Index() {
 
@@ -29,7 +29,7 @@ export default function Index() {
                 })
             }) 
             setItems([ {
-                name: "Create New Schedule",
+                name: "+ NEW SCHEDULE",
                 path: '/schedule/new',
                 active: pathname.includes('/schedule/new')
             },...newItems]);

@@ -96,7 +96,7 @@ function Step2({moveNext, setStep},ref) {
 
   return (
     <div>
-    <button onClick={()=>CreateSchedule()} style={{margin:'15px', fontSize:'20px'}} >
+    <button className='button-blue mt-5 mb-5' onClick={()=>CreateSchedule()} >
       Create Schedule
     </button>
     <LocalizationProvider dateAdapter={AdapterMoment}>
@@ -179,23 +179,29 @@ function Step2({moveNext, setStep},ref) {
             {
               title: 'Paste Task',
               onClick: async () => {
-                const pastedTask = JSON.parse(await navigator.clipboard.readText());
-                TASKNAME?.current?.setValue(pastedTask.name);
-            
-                const pastedStartTime = new Date(pastedTask.startTime);
-                const pastedEndTime = new Date(pastedTask.endTime);
-            
-                const startTime = new Date(selectedSlot.start);
-                startTime.setHours(pastedStartTime.getHours(), pastedStartTime.getMinutes(), 0, 0);
-            
-                const endTime = new Date(selectedSlot.start);
-                endTime.setHours(pastedEndTime.getHours(), pastedEndTime.getMinutes(), 0, 0);
-            
-                setNewTask({
-                  ...pastedTask,
-                  startTime: startTime,
-                  endTime: endTime,
-                });
+                try {
+                  
+                  const pastedTask = JSON.parse(await navigator.clipboard.readText());
+                  TASKNAME?.current?.setValue(pastedTask.name);
+              
+                  const pastedStartTime = new Date(pastedTask.startTime);
+                  const pastedEndTime = new Date(pastedTask.endTime);
+              
+                  const startTime = new Date(selectedSlot.start);
+                  startTime.setHours(pastedStartTime.getHours(), pastedStartTime.getMinutes(), 0, 0);
+              
+                  const endTime = new Date(selectedSlot.start);
+                  endTime.setHours(pastedEndTime.getHours(), pastedEndTime.getMinutes(), 0, 0);
+              
+                  setNewTask({
+                    ...pastedTask,
+                    startTime: startTime,
+                    endTime: endTime,
+                  });
+                } catch (error) {
+                  
+                  console.log(error);
+                }
               }
             }
           ]}

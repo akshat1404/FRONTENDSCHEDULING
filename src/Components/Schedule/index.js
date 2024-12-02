@@ -10,7 +10,7 @@ export default function Schedule() {
     const navigate = useNavigate();
     const [payload, setPayload]=useState({})
     const stepData = useRef();
-    const [step, setStep]= useState(0);
+    const [step, setStep]= useState(1);
 
     const moveNext = async() => {
 
@@ -46,11 +46,6 @@ export default function Schedule() {
 
     return (
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', height:'auto' }}>
-            {
-                step ===0 && <button style={{ height: 'fit-content', padding: '10px 20px' }} onClick={() => setStep(1)}>
-                    Create New Schedule
-                </button>
-            }
             {
                 step ===1 && <Step1 setStep={setStep} ref={stepData} moveNext={moveNext} />
             }

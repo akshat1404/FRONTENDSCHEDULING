@@ -2,20 +2,26 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import Modal from '../../Utils/Modal';
+import Modal from '../../../Utils/Modal';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import Input from '../../Utils/Input';
+import Input from '../../../Utils/Input';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'; // Adapter for moment.js
-import generateNumericId from '../../Utils/Helper';
+import generateNumericId from '../../../Utils/Helper';
 import { useParams } from 'react-router-dom';
-import { get } from '../../Axios/Axios';
+import { get, patch , put, Delete} from '../../../Axios/Axios';
+import {useDispatch, useSelector} from 'react-redux';
+import { setFollowedSchedule } from '../../../Redux/Reducers/scheduleReducer';
+import './ViewSchedule.css';
+import { useNavigate } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
-function ViewSchedule({moveNext},ref) {
+function ViewSchedule() {
 
   const {id} = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const TASKNAME=useRef();
   const [edit, setEdit] = useState(false);
@@ -24,8 +30,9 @@ function ViewSchedule({moveNext},ref) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [type, setType] = useState(undefined);
+  const followedSchedule=useSelector(state => state.schedule.id);
 
-  useEffect(() => {
+  const init = () =>{
     get(`api/schedules/${id}`, (res) => {
       const tasks = res.tasks;
       setType(res.type);
@@ -37,6 +44,10 @@ function ViewSchedule({moveNext},ref) {
       }));
       setTasks(correctTaskForm);
     });
+  }
+
+  useEffect(() => {
+    init();
   }, [id]);
   
 
@@ -56,8 +67,15 @@ function ViewSchedule({moveNext},ref) {
   };
 
   const addTask = () => {
-    const { startTime, endTime, name } = newTask;
-    if (!name || moment(endTime).isSameOrBefore(startTime)) return;
+    const { startTime, endTime } = newTask;
+    let name = TASKNAME.current.getValue();
+    const now = moment();
+    const startMoment = moment(startTime);
+
+    if (
+        !name || moment(endTime).isSameOrBefore(startTime) ||(startMoment.isBefore(now, "day")) || (startMoment.isSame(now, "day") && startMoment.isBefore(now))
+    ) return ;
+
     const taskId='task'+generateNumericId();
     const newTaskEntry = { start: startTime, end: endTime, title: name, id: taskId };
 
@@ -100,12 +118,40 @@ function ViewSchedule({moveNext},ref) {
 
   return (
     <div style={{padding:'20px'}} >
-    <button
-      onClick={()=>{
-        
-      }}
-    >
-    Follow This Schedule</button>
+      <div className='flex mb-5 space-between' style={{gap:'10px'}} >
+        <div className='flex' style={{gap:'10px'}} >
+          <button className='button-blue'
+            onClick={()=>{
+              patch(`api/schedules/${id}`, {followed: true}, (res) => {
+                dispatch(setFollowedSchedule({id}));
+              }); 
+            }}
+          >
+          {followedSchedule!==id ? "Follow This Schedule":"Followed Schedule"}
+          </button>
+          <button className='button-green'
+            onClick={()=>{
+              put(`api/schedules/${id}`, {tasks}, (res) => {
+                if(!res.error){
+                  init();
+                }
+              }); 
+            }}
+          >
+          Update This Schedule</button>
+        </div>
+        <button className='button-red'
+          onClick={()=>{
+            Delete(`api/schedules/${id}`, {}, (res) => {
+              return ;
+              if(!res.error){
+                navigate('/schedule')
+              }
+            }); 
+          }}
+        >
+        Delete This Schedule</button>
+    </div>
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <div className="weekly-planner">
         <Calendar
@@ -121,7 +167,7 @@ function ViewSchedule({moveNext},ref) {
           step={60}
           timeslots={1}
           eventPropGetter={eventStyleGetter}
-          onSelectEvent={(event) =>setEdit(event)}
+          onSelectEvent={(event) =>{setNewTask({startTime:event.start,endTime:event.end,name:event.title,id:event.id});setEdit(event)}}
           />
         
         <Modal
