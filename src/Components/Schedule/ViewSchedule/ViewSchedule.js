@@ -120,7 +120,7 @@ function ViewSchedule() {
     <div style={{padding:'20px'}} >
       <div className='flex mb-5 space-between' style={{gap:'10px'}} >
         <div className='flex' style={{gap:'10px'}} >
-          <button className='button-blue'
+          <button className='button blue'
             onClick={()=>{
               patch(`api/schedules/${id}`, {followed: true}, (res) => {
                 dispatch(setFollowedSchedule({id}));
@@ -129,7 +129,7 @@ function ViewSchedule() {
           >
           {followedSchedule!==id ? "Follow This Schedule":"Followed Schedule"}
           </button>
-          <button className='button-green'
+          <button className='button green'
             onClick={()=>{
               put(`api/schedules/${id}`, {tasks}, (res) => {
                 if(!res.error){
@@ -140,7 +140,7 @@ function ViewSchedule() {
           >
           Update This Schedule</button>
         </div>
-        <button className='button-red'
+        <button className='button red'
           onClick={()=>{
             Delete(`api/schedules/${id}`, {}, (res) => {
               return ;

@@ -21,7 +21,11 @@ function Index(props, ref) {
       <label className="input-label" style={props.labelStyle ? props.labelStyle : { marginRight: '5px' }}>
         {props.label}
       </label>
+      {props.textArea ? 
+      <textarea row={props.textArea} style={props.inputStyle ? props.inputStyle : {width:'200px'}} ref={REF} className="styled-input" />
+    :
       <input style={props.inputStyle ? props.inputStyle : {width:'200px'}} ref={REF} className="styled-input" />
+    }
     </div>
   );
 }
