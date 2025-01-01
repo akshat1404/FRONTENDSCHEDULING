@@ -96,7 +96,7 @@ function Step2({moveNext, setStep},ref) {
 
   return (
     <div>
-    <button className='button-blue mt-5 mb-5' onClick={()=>CreateSchedule()} >
+    <button className='button blue mt-5 mb-5' onClick={()=>CreateSchedule()} >
       Create Schedule
     </button>
     <LocalizationProvider dateAdapter={AdapterMoment}>
