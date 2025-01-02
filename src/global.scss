@@ -55,4 +55,22 @@
       }
     }
   }
+
+@for $i from 1 through 10 {
+    .pb-#{$i} {
+      padding-bottom: #{$i * 0.25}rem;
+    }
+  
+    .pt-#{$i} {
+      padding-top: #{$i * 0.25}rem;
+    }
+  
+    .pl-#{$i} {
+      padding-left: #{$i * 0.25}rem;
+    }
+  
+    .pr-#{$i} {
+      padding-right: #{$i * 0.25}rem;
+    }
+  }
   
