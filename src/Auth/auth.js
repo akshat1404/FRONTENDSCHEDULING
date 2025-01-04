@@ -54,6 +54,7 @@ function Auth() {
                             <Input style={{ justifyContent: 'end' }} labelStyle={{ fontSize: '16px' }} ref={EMAIL} label="Email" />
                             <Input style={{ justifyContent: 'end' }} labelStyle={{ fontSize: '16px' }} ref={PASSWORD} label="Password" />
                             <button
+                                className='button blue'
                                 style={{ marginTop: '20px' }}
                                 onClick={() => {
                                     let email = EMAIL.current.getValue();
@@ -72,7 +73,7 @@ function Auth() {
                             >
                                 Login
                             </button>
-                            <p style={{ color: 'black' }}>Don't have an account, <button onClick={() => setSign(true)} style={{ border: 'none', backgroundColor: 'white', color: 'blue', display: 'inline', margin: '5px', fontWeight: 'bold' }}>sign up</button> now</p>
+                            <p style={{ color: 'black' }}>Don't have an account, <button className='button green' onClick={() => setSign(true)} style={{ border: 'none', backgroundColor: 'white', color: 'blue', display: 'inline', margin: '5px', fontWeight: 'bold' }}>sign up</button> now</p>
                             
                             <GoogleLogin
                                 onSuccess={handleGoogleLoginSuccess}
@@ -86,6 +87,7 @@ function Auth() {
                             <Input style={{ justifyContent: 'end' }} labelStyle={{ fontSize: '16px' }} ref={PASSWORD} label="Password" />
                             <Input style={{ justifyContent: 'end' }} labelStyle={{ fontSize: '16px' }} ref={NAME} label="Name" />
                             <button
+                                className='button green'
                                 style={{ marginTop: '20px' }}
                                 onClick={() => {
                                     let name = NAME.current.getValue();
@@ -107,7 +109,7 @@ function Auth() {
                             >
                                 Sign Up
                             </button>
-                            <p style={{ color: 'black' }}>Already have an account, <button onClick={() => setSign(false)} style={{ border: 'none', backgroundColor: 'white', color: 'blue', display: 'inline', margin: '5px', fontWeight: 'bold' }}>Login</button> now</p>
+                            <p style={{ color: 'black' }}>Already have an account, <button className='button blue' onClick={() => setSign(false)} style={{ border: 'none', backgroundColor: 'white', color: 'blue', display: 'inline', margin: '5px', fontWeight: 'bold' }}>Login</button> now</p>
                         </>
                     )}
                 </div>
