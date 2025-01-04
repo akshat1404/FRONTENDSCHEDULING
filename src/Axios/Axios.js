@@ -65,9 +65,9 @@ export const put = async (url, payload, res) => {
     }
 };
 
-export const Delete = async (url, payload, res) => {
+export const Delete = async (url, res) => {
     try {
-        const response = await axios.delete(`${baseUrl}/${url}`, payload, {
+        const response = await axios.delete(`${baseUrl}/${url}`, {
             headers: {
                 'Authorization': `Bearer ${getToken()}`,
                 'Content-Type': 'application/json'

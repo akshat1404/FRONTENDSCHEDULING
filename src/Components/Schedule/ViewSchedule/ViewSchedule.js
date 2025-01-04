@@ -142,8 +142,8 @@ function ViewSchedule() {
         </div>
         <button className='button red'
           onClick={()=>{
-            Delete(`api/schedules/${id}`, {}, (res) => {
-              return ;
+            Delete(`api/schedules/${id}`, (res) => {
+              
               if(!res.error){
                 navigate('/schedule')
               }
