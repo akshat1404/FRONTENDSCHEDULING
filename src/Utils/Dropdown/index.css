@@ -1,11 +1,11 @@
 .dropdown-wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .dropdown-container {
   position: relative;
-  width: 200px;
   font-family: Arial, sans-serif;
 }
 
@@ -17,7 +17,8 @@
 }
 
 .dropdown-header {
-  padding: 10px;
+  padding: 8px 12px;
+  width: 200px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
