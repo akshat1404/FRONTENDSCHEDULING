@@ -74,3 +74,21 @@
     }
   }
   
+@for $i from 1 through 10 {
+    .bb-#{$i} {
+      border-bottom: #{$i * 0.25}rem;
+    }
+  
+    .bt-#{$i} {
+      border-top: #{$i * 0.25}rem;
+    }
+  
+    .bl-#{$i} {
+      border-left: #{$i * 0.25}rem;
+    }
+  
+    .br-#{$i} {
+      border-right: #{$i * 0.25}rem;
+    }
+  }
+  
