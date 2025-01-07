@@ -14,7 +14,7 @@ const getToken = () => {
 };
 
 
-const DEV_MODE=window.location.origin.includes('localhost');
+const DEV_MODE=false;
 
 const baseUrl = DEV_MODE? 'http://localhost:800' :'https://backendscheduling.onrender.com';
 

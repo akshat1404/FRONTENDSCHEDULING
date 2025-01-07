@@ -10,7 +10,7 @@ import ViewSchedule from './Components/Schedule/ViewSchedule/ViewSchedule';
 import Notifictions from './Components/Notifictions';
 import store from 'store';
 import { get } from './Axios/Axios';
-import { setFollowedSchedule } from './Redux/Reducers/scheduleReducer';
+import { setFollowedSchedule, setNotfied } from './Redux/Reducers/scheduleReducer';
 import { useDispatch } from 'react-redux';
 import { setUser } from './Redux/Reducers/userReducer';
 import { IoIosNotifications } from "react-icons/io";
@@ -28,6 +28,7 @@ function App() {
 
         get('config', (res) => {
             dispatch(setFollowedSchedule({id: res.followedSchedule}));
+            dispatch(setNotfied({submittedToday: res.submittedToday}));
             dispatch(setUser({name: res.name, email: res.email}));
         })
     },[])
