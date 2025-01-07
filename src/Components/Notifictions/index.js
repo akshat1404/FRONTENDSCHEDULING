@@ -6,13 +6,13 @@ import { Checkbox, Button, Typography, List, ListItem, ListItemText, ListItemSec
 function Notifications() {
     const [data, setData] = useState();
     const [checkedTasks, setCheckedTasks] = useState([]);
-    const followedSchedule = useSelector(state => state.schedule.id);
+    const {id: followedSchedule,submittedToday} = useSelector(state => state.schedule);
 
     const checkTimeAndFetchNotifications = () => {
         const currentTime = new Date();
         const hours = currentTime.getHours();
         const minutes = currentTime.getMinutes();
-        return true;
+        return hours === 23 && minutes >= 0 && minutes < 60;
     };
 
     useEffect(() => {
@@ -34,7 +34,9 @@ function Notifications() {
     const handleSubmit = () => {
 
         post('userTasks/submitTasks',{scheduleId: followedSchedule, completedTasks: checkedTasks}, (res) => {
-            console.log(res);
+            if(!res.error){
+                window.location.href='/stats';
+            }
         });
     };
 
@@ -45,7 +47,7 @@ function Notifications() {
                     Today's Tasks
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                    Tasks will be displayed here from 11:00 AM to 11:59 PM
+                    Tasks will be displayed here from 11:00 PM to 11:59 PM
                 </Typography>
             </div>
         );
@@ -53,38 +55,48 @@ function Notifications() {
 
     return (
         <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-            <Typography variant="h5" gutterBottom>
-                Today's Tasks
-            </Typography>
-            <List>
-                {data.map((task) => (
-                    <div key={task.id}>
-                        <ListItem>
-                            <ListItemText
-                                primary={task.title}
-                                secondary={`Start: ${new Date(task.start).toLocaleTimeString()} - End: ${new Date(task.end).toLocaleTimeString()}`}
-                            />
-                            <ListItemSecondaryAction>
-                                <Checkbox
-                                    edge="end"
-                                    checked={checkedTasks.includes(task.id)}
-                                    onChange={() => handleToggle(task.id)}
+            {
+                submittedToday ? 
+
+                <Typography variant="h4" style={{width:'max-content'}}>
+                    Tasks Already Submitted for today
+                </Typography>
+                :
+                <>
+                <Typography variant="h5" gutterBottom>
+                    Today's Tasks
+                </Typography>
+                <List>
+                    {data.map((task) => (
+                        <div key={task.id}>
+                            <ListItem>
+                                <ListItemText
+                                    primary={task.title}
+                                    secondary={`Start: ${new Date(task.start).toLocaleTimeString()} - End: ${new Date(task.end).toLocaleTimeString()}`}
                                 />
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                        <Divider />
-                    </div>
-                ))}
-            </List>
-            <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                onClick={handleSubmit}
-                style={{ marginTop: '20px' }}
-            >
-                Submit
-            </Button>
+                                <ListItemSecondaryAction>
+                                    <Checkbox
+                                        edge="end"
+                                        checked={checkedTasks.includes(task.id)}
+                                        onChange={() => handleToggle(task.id)}
+                                    />
+                                </ListItemSecondaryAction>
+                            </ListItem>
+                            <Divider />
+                        </div>
+                    ))}
+                </List>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={handleSubmit}
+                    style={{ marginTop: '20px' }}
+                >
+                    Submit
+                </Button>
+                </>
+            }
         </div>
     );
 }

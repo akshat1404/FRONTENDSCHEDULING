@@ -8,6 +8,9 @@ const followedScheduleSlice = createSlice({
   name: 'followedSchedule',
   initialState,
   reducers: {
+    setNotfied : (state, action) => {
+      state.submittedToday = action.payload.submittedToday;
+    },
     setFollowedSchedule: (state, action) => {
       state.id = action.payload.id;
     },
@@ -17,5 +20,5 @@ const followedScheduleSlice = createSlice({
   },
 });
 
-export const { setFollowedSchedule, clearFollowedSchedule } = followedScheduleSlice.actions;
+export const { setFollowedSchedule, clearFollowedSchedule, setNotfied} = followedScheduleSlice.actions;
 export default followedScheduleSlice.reducer;
