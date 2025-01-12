@@ -13,6 +13,12 @@ const getToken = () => {
     return null;
 };
 
+const Headers={
+    headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Content-Type': 'application/json'
+    }
+}
 
 const DEV_MODE=false;
 
@@ -21,10 +27,7 @@ const baseUrl = DEV_MODE? 'http://localhost:800' :'https://backendscheduling.onr
 export const post = async (url, payload, res) => {
     try {
         const response = await axios.post(`${baseUrl}/${url}`, payload, {
-            headers: {
-                'Authorization': `Bearer ${getToken()}`,
-                'Content-Type': 'application/json'
-            }
+            ...Headers
         });
         res(response.data);
         return response;
@@ -37,10 +40,7 @@ export const post = async (url, payload, res) => {
 export const patch = async (url, payload, res) => {
     try {
         const response = await axios.patch(`${baseUrl}/${url}`, payload, {
-            headers: {
-                'Authorization': `Bearer ${getToken()}`,
-                'Content-Type': 'application/json'
-            }
+            ...Headers
         });
         res(response.data);
         return response;
@@ -53,10 +53,7 @@ export const patch = async (url, payload, res) => {
 export const put = async (url, payload, res) => {
     try {
         const response = await axios.put(`${baseUrl}/${url}`, payload, {
-            headers: {
-                'Authorization': `Bearer ${getToken()}`,
-                'Content-Type': 'application/json'
-            }
+            ...Headers
         });
         res(response.data);
         return response;
@@ -69,10 +66,7 @@ export const put = async (url, payload, res) => {
 export const Delete = async (url, res) => {
     try {
         const response = await axios.delete(`${baseUrl}/${url}`, {
-            headers: {
-                'Authorization': `Bearer ${getToken()}`,
-                'Content-Type': 'application/json'
-            }
+            ...Headers
         });
         res(response.data);
         return response;
@@ -86,10 +80,7 @@ export const Delete = async (url, res) => {
 export const get = async (url, res, q) => {
     try {
         const response = await axios.get(`${baseUrl}/${url}`, {
-            headers: {
-                'Authorization': `Bearer ${getToken()}`,
-                'Content-Type': 'application/json'
-            },
+            ...Headers,
             params: q
         });
         res(response.data);
